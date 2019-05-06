@@ -21,6 +21,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class HelloE2ESeleniumTest {
 
+    private static String chromeVersion = "74";
     private WebDriver driver;
 
     @LocalServerPort
@@ -28,7 +29,7 @@ public class HelloE2ESeleniumTest {
 
     @BeforeClass
     public static void setUpClass() throws Exception {
-        WebDriverManager.chromedriver().version("73").setup();
+        WebDriverManager.chromedriver().version(chromeVersion).setup();
     }
 
     @Before
