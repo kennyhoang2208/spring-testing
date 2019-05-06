@@ -1,10 +1,10 @@
 pipeline {
   agent {
-    label "jenkins-maven"
+    label "jenkins-gradle"
   }
   environment {
     ORG = 'trantuyen'
-    APP_NAME = 'spring-test'
+    APP_NAME = 'spring-testing'
     CHARTMUSEUM_CREDS = credentials('jenkins-x-chartmuseum')
   }
   stages {
@@ -18,9 +18,8 @@ pipeline {
         HELM_RELEASE = "$PREVIEW_NAMESPACE".toLowerCase()
       }
       steps {
-        container('maven') {
-          sh "mvn versions:set -DnewVersion=$PREVIEW_VERSION"
-          sh "mvn install"
+        container('gradle') {
+          sh "gradle clean build"
         }
       }
     }
@@ -29,7 +28,7 @@ pipeline {
         branch 'master'
       }
       steps {
-        container('maven') {
+        container('gradle') {
 
           // ensure we're not on a detached head
           sh "git checkout master"
@@ -38,9 +37,8 @@ pipeline {
 
           // so we can retrieve the version in later steps
           sh "echo \$(jx-release-version) > VERSION"
-          sh "mvn versions:set -DnewVersion=\$(cat VERSION)"
           sh "jx step tag --version \$(cat VERSION)"
-          sh "mvn clean deploy"
+          sh "gradle clean build"
         }
       }
     }
