@@ -1,5 +1,6 @@
-FROM openjdk:8-jre-alpine
-VOLUME /tmp
-ADD build/libs/spring-testing*.jar app.jar
-ADD .env .env
-ENTRYPOINT [ "sh", "-c", "source .env && java -jar app.jar" ]
+FROM openjdk:8-jdk-slim
+ENV PORT 8080
+EXPOSE 8080
+COPY build/libs/*.jar /opt/app.jar
+WORKDIR /opt
+CMD ["java", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-jar", "app.jar"]
