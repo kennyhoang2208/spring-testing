@@ -3,7 +3,7 @@ pipeline {
     label "jenkins-gradle"
   }
   environment {
-    ORG = 'trantuyen'
+    ORG = 'kennyhoang2208'
     APP_NAME = 'spring-testing'
     CHARTMUSEUM_CREDS = credentials('jenkins-x-chartmuseum')
   }
