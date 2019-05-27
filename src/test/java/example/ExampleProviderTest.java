@@ -26,7 +26,7 @@ import static org.mockito.MockitoAnnotations.initMocks;
 
 @RunWith(RestPactRunner.class)
 @Provider("person_provider")// same as in the "provider_name" part in our pact file
-@PactFolder("target/pacts") // tells pact where to load the pact files from
+@PactFolder("pacts") // tells pact where to load the pact files from
 public class ExampleProviderTest {
 
     @Mock
