@@ -9,6 +9,11 @@ image:
 
 # define environment variables here as a map of key: value
 env:
+  WEATHER_API_KEY: "49bdd296a3e91ef8d6a69c8b33c4b7fa"
+  DB_HOST: "jx-testdb"
+  DB_NAME: "postgres"
+  DB_PASSWORD: pQoXKj9oPX
+  # DB_PASSWORD: cFFvWEtqOW9QWAo=
 
 # enable this flag to use knative serve to deploy the app
 knativeDeploy: false
