@@ -1,7 +1,5 @@
 pipeline {
-  agent {
-    label "jenkins-gradle"
-  }
+  agent any
   environment {
     ORG = 'kennyhoang2208'
     APP_NAME = 'spring-testing'
@@ -19,7 +17,7 @@ pipeline {
       }
       steps {
         container('docker-helm') {
-          sh "helm init --client-only"
+          sh "helm init"
           sh "source .env"
           sh "echo 'Testing step ... '"
         }
