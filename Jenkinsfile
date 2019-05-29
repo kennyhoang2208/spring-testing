@@ -7,7 +7,7 @@ pipeline {
   }
   stages {
     stage('CI Build and push snapshot') {
-      agent { label 'gradle' }
+      agent { label 'jenkins-gradle' }
       when {
         branch 'PR-*'
       }
@@ -32,7 +32,7 @@ pipeline {
     }
 
     stage('Integration Test') {
-      agent { label 'docker-helm' }
+      agent { label 'jenkins-docker-helm' }
       when {
         branch 'PR-*'
       }
@@ -45,7 +45,7 @@ pipeline {
     }
 
     stage('Build Release') {
-      agent { label 'gradle' }
+      agent { label 'jenkins-gradle' }
       when {
         branch 'master'
       }
@@ -67,7 +67,7 @@ pipeline {
       }
     }
     stage('Promote to Environments') {
-      agent { label 'gradle' }
+      agent { label 'jenkins-gradle' }
       when {
         branch 'master'
       }
