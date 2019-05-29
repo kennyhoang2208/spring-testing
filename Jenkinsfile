@@ -1,7 +1,6 @@
 pipeline {
   agent {
-    // label "jenkins-gradle"
-    label "any"
+    label "jenkins-gradle"
   }
   environment {
     ORG = 'kennyhoang2208'
