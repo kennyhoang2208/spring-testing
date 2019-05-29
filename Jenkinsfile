@@ -1,6 +1,7 @@
 pipeline {
   agent {
-    label "jenkins-gradle"
+    // label "jenkins-gradle"
+    label "any"
   }
   environment {
     ORG = 'kennyhoang2208'
@@ -18,8 +19,15 @@ pipeline {
         HELM_RELEASE = "$PREVIEW_NAMESPACE".toLowerCase()
       }
       steps {
+        container('docker-helm') {
+          sh "helm init --client-only"
+          sh "source .env"
+          sh "echo 'Testing step ... '"
+        }
         container('gradle') {
           sh "gradle clean build"
+
+          // build docker images
           sh "export VERSION=$PREVIEW_VERSION && skaffold build -f skaffold.yaml"
           sh "jx step post build --image $DOCKER_REGISTRY/$ORG/$APP_NAME:$PREVIEW_VERSION"
           dir('./charts/preview') {

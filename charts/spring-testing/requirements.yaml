@@ -1,0 +1,9 @@
+# !! File must end with empty line !!
+dependencies:
+- alias: testdb
+  name: postgresql
+  repository: https://kubernetes-charts.storage.googleapis.com
+  version: 5.1.0
+  postgresqlDatabase: postgres
+  postgresqlUsername: postgres
+  postgresqlPassword: password
