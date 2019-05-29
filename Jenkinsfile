@@ -1,5 +1,5 @@
 pipeline {
-  agent any
+  agent none
   environment {
     ORG = 'kennyhoang2208'
     APP_NAME = 'spring-testing'
@@ -7,6 +7,7 @@ pipeline {
   }
   stages {
     stage('CI Build and push snapshot') {
+      agent { label 'gradle' }
       when {
         branch 'PR-*'
       }
@@ -16,11 +17,6 @@ pipeline {
         HELM_RELEASE = "$PREVIEW_NAMESPACE".toLowerCase()
       }
       steps {
-        container('docker-helm') {
-          sh "helm init"
-          sh "source .env"
-          sh "echo 'Testing step ... '"
-        }
         container('gradle') {
           sh "gradle clean build"
 
@@ -34,7 +30,22 @@ pipeline {
         }
       }
     }
+
+    stage('Integration Test') {
+      agent { label 'docker-helm' }
+      when {
+        branch 'PR-*'
+      }
+      steps {
+        container('docker-helm') {
+          sh "echo 'Testing agent any'"
+          sh "helm init"
+        }
+      }
+    }
+
     stage('Build Release') {
+      agent { label 'gradle' }
       when {
         branch 'master'
       }
@@ -56,6 +67,7 @@ pipeline {
       }
     }
     stage('Promote to Environments') {
+      agent { label 'gradle' }
       when {
         branch 'master'
       }
