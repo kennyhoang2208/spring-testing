@@ -78,7 +78,7 @@ sourceSets {
 task integrationTest(type: Test) {
 
     // So that Gradle knows where the integration test classes are:
-    testClassesDir = sourceSets.integrationTest.output.classesDirs
+    testClassesDir = sourceSets.integrationTest.output.classesDir
 
     // So that Gradle knows which runtime class path to use:
     classpath = sourceSets.integrationTest.runtimeClasspath
