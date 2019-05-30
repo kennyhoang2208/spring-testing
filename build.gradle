@@ -25,6 +25,7 @@ jar {
 }
 
 sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 repositories {
 	mavenCentral()
@@ -50,4 +51,36 @@ dependencies {
 	testCompile('au.com.dius:pact-jvm-consumer-junit_2.12:3.5.5')
 	testCompile('au.com.dius:pact-jvm-provider-spring_2.12:3.5.5')
 	testCompile('io.github.bonigarcia:webdrivermanager:3.3.0')
+}
+
+sourceSets {
+    // So that we can place source code in 'src/integrationTest/java':
+    integrationTest {
+        java {
+
+            // So that we can compile against the business classes:
+            compileClasspath += main.output
+            // So that we can compile against the libs used by the business classes:
+            compileClasspath += main.compileClasspath
+
+            // So that we can compile against the unit test classes (custom utilities fx):
+            compileClasspath += test.output
+            // So that we can compile against the libs used by the unit test classes (JUnit, Spring test support, ...):
+            compileClasspath += test.compileClasspath
+
+            // So that test- and business classes can be used at runtime:
+            runtimeClasspath += test.runtimeClasspath
+
+        }
+    }
+}
+
+task integrationTest(type: Test) {
+    description = "Runs Integration Tests"
+
+    // So that Gradle knows where the integration test classes are:
+    testClassesDirs = sourceSets.integrationTest.output.classesDirs
+
+    // So that Gradle knows which runtime class path to use:
+    classpath += sourceSets.integrationTest.runtimeClasspath
 }

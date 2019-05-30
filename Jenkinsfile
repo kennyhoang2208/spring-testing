@@ -1,7 +1,5 @@
 pipeline {
-  agent {
-    label "jenkins-gradle"
-  }
+  agent { label 'jenkins-gradle' }
   environment {
     ORG = 'kennyhoang2208'
     APP_NAME = 'spring-testing'
@@ -20,6 +18,8 @@ pipeline {
       steps {
         container('gradle') {
           sh "gradle clean build"
+
+          // build docker images
           sh "export VERSION=$PREVIEW_VERSION && skaffold build -f skaffold.yaml"
           sh "jx step post build --image $DOCKER_REGISTRY/$ORG/$APP_NAME:$PREVIEW_VERSION"
           dir('./charts/preview') {
@@ -29,6 +29,20 @@ pipeline {
         }
       }
     }
+
+    stage('Integration Test') {
+      when {
+        branch 'PR-*'
+      }
+      steps {
+        container('gradle') {
+          // Deploy finished
+          sh "echo 'Running integration tests ....'"
+          sh "gradle integrationTest"
+        }
+      }
+    }
+
     stage('Build Release') {
       when {
         branch 'master'

@@ -32,8 +32,15 @@ spec:
         env:
 {{- range $pkey, $pval := .Values.env }}
         - name: {{ $pkey }}
-          value: {{ $pval }}
+          value: {{ $pval | quote}}
 {{- end }}
+        - name: DB_HOST
+          value: {{ .Chart.Name }}-{{ .Values.env.DB_ALIAS }}
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Chart.Name }}-{{ .Values.env.DB_ALIAS }}
+              key: postgresql-password
         ports:
         - containerPort: {{ .Values.service.internalPort }}
         livenessProbe:
