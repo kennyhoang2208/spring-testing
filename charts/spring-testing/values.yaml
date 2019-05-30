@@ -14,7 +14,8 @@ env:
   DB_PORT: "5432"
   DB_NAME: "postgres"
   DB_USER: "postgres"
-  DB_PASSWORD: "password"
+  # DB_PASSWORD: "password"
+  DB_ALIAS: "testdb"
 
 # enable this flag to use knative serve to deploy the app
 knativeDeploy: false
