@@ -34,10 +34,12 @@ spec:
         - name: {{ $pkey }}
           value: {{ $pval | quote}}
 {{- end }}
+        - name: DB_HOST
+          value: {{ .Chart.Name }}-{{ .Values.env.DB_ALIAS }}
         - name: DB_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: {{ template "fullname" . }}-{{ .Values.env.DB_ALIAS }}
+              name: {{ .Chart.Name }}-{{ .Values.env.DB_ALIAS }}
               key: postgresql-password
         ports:
         - containerPort: {{ .Values.service.internalPort }}
