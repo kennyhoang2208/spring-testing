@@ -36,8 +36,8 @@ pipeline {
       }
       steps {
         container('gradle') {
-          sh "echo 'Testing agent any'"
-          sh "helm init"
+          sh "echo 'Running integration tests ....'"
+          sh "gradle integrationTest"
         }
       }
     }

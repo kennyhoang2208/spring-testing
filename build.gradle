@@ -25,6 +25,7 @@ jar {
 }
 
 sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 repositories {
 	mavenCentral()
@@ -57,7 +58,7 @@ sourceSets {
     integrationTest {
         java {
 
-            // So that we can compile against the business classes (GreeterService, ...):
+            // So that we can compile against the business classes:
             compileClasspath += main.output
             // So that we can compile against the libs used by the business classes:
             compileClasspath += main.compileClasspath
@@ -77,7 +78,7 @@ sourceSets {
 task integrationTest(type: Test) {
 
     // So that Gradle knows where the integration test classes are:
-    testClassesDir = sourceSets.integrationTest.output.classesDir
+    testClassesDir = sourceSets.integrationTest.output.classesDirs
 
     // So that Gradle knows which runtime class path to use:
     classpath = sourceSets.integrationTest.runtimeClasspath
