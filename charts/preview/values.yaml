@@ -27,4 +27,5 @@ preview:
     DB_PORT: "5432"
     DB_NAME: "postgres"
     DB_USER: "postgres"
-    DB_ALIAS: "testdb"
+    DB_HOST: "preview-db"
+    DB_PASSWORD_SECRET: "preview-db"
