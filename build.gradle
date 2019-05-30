@@ -79,7 +79,7 @@ task integrationTest(type: Test) {
     description = "Runs Integration Tests"
 
     // So that Gradle knows where the integration test classes are:
-    testClassesDir = sourceSets.integrationTest.output.classesDir
+    testClassesDirs = sourceSets.integrationTest.output.classesDirs
 
     // So that Gradle knows which runtime class path to use:
     classpath += sourceSets.integrationTest.runtimeClasspath
