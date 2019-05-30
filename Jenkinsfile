@@ -36,6 +36,7 @@ pipeline {
       }
       steps {
         container('gradle') {
+          // Deploy finished
           sh "echo 'Running integration tests ....'"
           sh "gradle integrationTest"
         }
