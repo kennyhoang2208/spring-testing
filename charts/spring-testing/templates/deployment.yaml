@@ -34,11 +34,6 @@ spec:
         - name: {{ $pkey }}
           value: {{ $pval | quote}}
 {{- end }}
-        - name: DB_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: {{ .Values.env.DB_PASSWORD_SECRET }}
-              key: postgresql-password
         ports:
         - containerPort: {{ .Values.service.internalPort }}
         livenessProbe:

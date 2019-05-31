@@ -28,4 +28,4 @@ preview:
     DB_NAME: "postgres"
     DB_USER: "postgres"
     DB_HOST: "preview-db"
-    DB_PASSWORD_SECRET: "preview-db"
+    DB_PASSWORD: "password"

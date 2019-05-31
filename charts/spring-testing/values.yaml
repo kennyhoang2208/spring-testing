@@ -14,7 +14,7 @@ env:
   DB_PORT: "5432"
   DB_NAME: "postgres"
   DB_USER: "postgres"
-  DB_PASSWORD_SECRET: "jx-db"
+  DB_PASSWORD: "password"
 
 # enable this flag to use knative serve to deploy the app
 knativeDeploy: false
