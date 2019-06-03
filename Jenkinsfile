@@ -36,16 +36,6 @@ pipeline {
       }
       steps {
         container('gradle') {
-          // Depens TODO: Perform list of dependency services
-          // cd to root: .
-
-          // Checkout/clone code
-
-          // build, deploy
-
-          // ENV: preview
-
-          // Deploy finished
           sh "echo 'Running integration tests ....'"
           sh "gradle integrationTest"
         }
