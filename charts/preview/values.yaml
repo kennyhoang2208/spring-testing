@@ -29,3 +29,8 @@ spring-testing-preview:
     DB_USER: "postgres"
     DB_HOST: "spring-testing-preview-db"
     DB_PASSWORD: "password"
+
+db:
+  postgresqlDatabase: postgres
+  postgresqlUsername: postgres
+  postgresqlPassword: password
