@@ -56,10 +56,10 @@ public class ExampleController {
 
     @PostMapping("/person")
     public ResponseEntity<Person> savePerson(Person person) {
-        person = personRepository.save(person);
+        Person saved = personRepository.save(person);
 
-        URI uri = generateResourceUrl(person.getId());
-        return ResponseEntity.created(uri).body(person);
+        URI uri = generateResourceUrl(saved.getId());
+        return ResponseEntity.created(uri).body(saved);
     }
 
     URI generateResourceUrl(Long id) {
