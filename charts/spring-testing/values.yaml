@@ -10,7 +10,7 @@ image:
 # define environment variables here as a map of key: value
 env:
   WEATHER_API_KEY: "49bdd296a3e91ef8d6a69c8b33c4b7fa"
-  DB_HOST: "jx-db"
+  DB_HOST: "35.236.154.160"
   DB_PORT: "5432"
   DB_NAME: "postgres"
   DB_USER: "postgres"

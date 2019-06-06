@@ -1,0 +1,13 @@
+#spring:
+#  application:
+#    name: spring-testing
+#  cloud:
+#    kubernetes:
+#      reload:
+#        enabled: true
+#        mode: polling
+#        period: 5000
+#ribbon:
+#  http:
+#    client:
+#      enabled: true

@@ -31,6 +31,18 @@ repositories {
 	mavenCentral()
 }
 
+ext {
+	springCloudVersion = 'Greenwich.RELEASE'
+	springCloudK8sVersion = '1.0.1.RELEASE'
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+		mavenBom "org.springframework.cloud:spring-cloud-kubernetes-dependencies:${springCloudK8sVersion}"
+	}
+}
+
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter')
 	compile('org.springframework.boot:spring-boot-starter-actuator')
@@ -40,6 +52,13 @@ dependencies {
 	compile("org.springframework.boot:spring-boot-starter-jetty")
 	compile('org.springframework.boot:spring-boot-starter-data-jpa')
 	compile('org.postgresql:postgresql:42.1.1')
+
+	//	Cloud dependencies
+	compile('org.springframework.cloud:spring-cloud-kubernetes-config')
+	compile('org.springframework.cloud:spring-cloud-starter-kubernetes')
+	compile('org.springframework.cloud:spring-cloud-kubernetes-discovery')
+	compile('org.springframework.cloud:spring-cloud-starter-netflix-hystrix')
+	compile('org.springframework.cloud:spring-cloud-starter-kubernetes-ribbon')
 
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 	testCompile('com.h2database:h2')

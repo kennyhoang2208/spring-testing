@@ -5,10 +5,14 @@ import example.person.PersonRepository;
 import example.weather.WeatherClient;
 import example.weather.WeatherResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.Optional;
 
 @RestController
@@ -42,5 +46,21 @@ public class ExampleController {
         return weatherClient.fetchWeather()
                 .map(WeatherResponse::getSummary)
                 .orElse("Sorry, I couldn't fetch the weather for you :(");
+    }
+
+    @PostMapping("/person")
+    public ResponseEntity<Person> savePerson(Person person) {
+        person = personRepository.save(person);
+
+        URI uri = generateResourceUrl(person.getId());
+        return ResponseEntity.created(uri).body(person);
+    }
+
+    URI generateResourceUrl(Long id) {
+        return ServletUriComponentsBuilder
+                .fromCurrentRequestUri()
+                .path("/{id}")
+                .buildAndExpand(id)
+                .toUri();
     }
 }
