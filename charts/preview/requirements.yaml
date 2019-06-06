@@ -9,13 +9,13 @@ dependencies:
   repository: http://chartmuseum.jenkins-x.io
   version: 2.3.92
 
-- alias: db
+- alias: spring-testing-db
   name: postgresql
   repository: https://kubernetes-charts.storage.googleapis.com
   version: 5.1.0
 
   # !! "alias: preview" must be last entry in dependencies array !!
   # !! Place custom dependencies above !!
-- alias: spring-testing-preview
+- alias: spring-testing
   name: spring-testing
   repository: file://../spring-testing
