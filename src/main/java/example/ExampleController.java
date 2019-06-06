@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -46,6 +47,11 @@ public class ExampleController {
         return weatherClient.fetchWeather()
                 .map(WeatherResponse::getSummary)
                 .orElse("Sorry, I couldn't fetch the weather for you :(");
+    }
+
+    @PostMapping("/people")
+    public List<Person> getPeople() {
+        return personRepository.findAll();
     }
 
     @PostMapping("/person")
