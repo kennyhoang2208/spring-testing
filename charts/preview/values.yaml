@@ -16,6 +16,8 @@ cleanup:
     helm.sh/hook-delete-policy: hook-succeeded
 
 spring-testing:
+  replicaCount: 1
+  restartPolicy: Never
   image:
     repository:
     tag:
