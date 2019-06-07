@@ -28,7 +28,7 @@ spec:
       - name: {{ .Chart.Name }}
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
-        restartPolicy: Always
+        restartPolicy: {{ .Values.restartPolicy }}
         env:
 {{- range $pkey, $pval := .Values.env }}
         - name: {{ $pkey }}
