@@ -33,6 +33,8 @@ spec:
         - name: {{ $pkey }}
           value: {{ $pval | quote}}
 {{- end }}
+        - name: DB_HOST
+          value: "{{ .Release.Name }}-{{ .Chart.Name }}-db"
         ports:
         - containerPort: {{ .Values.service.internalPort }}
         livenessProbe:
