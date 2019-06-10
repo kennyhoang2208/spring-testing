@@ -17,7 +17,6 @@ cleanup:
 
 spring-testing:
   replicaCount: 1
-  restartPolicy: Never
   image:
     repository:
     tag:
