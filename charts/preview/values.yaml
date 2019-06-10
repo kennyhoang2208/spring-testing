@@ -28,7 +28,6 @@ spring-testing:
     DB_PORT: "5432"
     DB_NAME: "postgres"
     DB_USER: "postgres"
-    DB_HOST: "preview-spring-testing-db"
     DB_PASSWORD: "password"
 
 spring-testing-db:
