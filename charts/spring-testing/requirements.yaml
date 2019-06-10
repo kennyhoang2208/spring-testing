@@ -1,6 +1,6 @@
 # !! File must end with empty line !!
 dependencies:
-- alias: db
+- alias: spring-testing-db
   name: postgresql
   repository: https://kubernetes-charts.storage.googleapis.com
   version: 5.1.0
