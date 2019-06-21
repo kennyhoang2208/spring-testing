@@ -1,4 +1,4 @@
-CHART_REPO := http://jenkins-x-chartmuseum:8080
+CHART_REPOSITORY := http://jenkins-x-chartmuseum:8080
 CURRENT=$(pwd)
 NAME := spring-testing
 OS := $(shell uname)
