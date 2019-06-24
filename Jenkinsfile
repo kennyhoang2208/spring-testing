@@ -55,7 +55,12 @@ pipeline {
           sh "jx step git credentials"
 
           sh "echo 'latest' > VERSION"
-          sh "jx step tag --version \$(cat VERSION)"
+          sh "if [ ! $(git tag -l \$(cat VERSION)) ]; then \
+                jx step tag --version \$(cat VERSION)
+              else
+                git tag -f \$(cat VERSION)
+              fi"
+
           sh "gradle clean build"
           sh "export VERSION=`cat VERSION` && skaffold build -f skaffold.yaml"
           sh "jx step post build --image $DOCKER_REGISTRY/$ORG/$APP_NAME:\$(cat VERSION)"
