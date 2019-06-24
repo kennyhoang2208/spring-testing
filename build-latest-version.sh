@@ -1,6 +1,8 @@
 #! bin/bash
 set -e
 
+export LAST_VERSION=`cat VERSION`
+
 echo 'latest' > VERSION
 
 # Fetch new tags
@@ -19,3 +21,6 @@ fi
 gradle clean build
 export VERSION=`cat VERSION` && skaffold build -f skaffold.yaml
 jx step post build --image "$DOCKER_REGISTRY/$ORG/$APP_NAME:$(cat VERSION)"
+
+# Set the version back to the last one
+echo $LAST_VERSION > VERSION
