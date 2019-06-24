@@ -42,6 +42,39 @@ pipeline {
       }
     }
 
+    stage('Build Latest Image') {
+      when {
+        branch 'master'
+      }
+      steps {
+        container('gradle') {
+
+          // Build the latest version for the service
+          // This is useful to other services can use this as a dependency
+          sh "sh build-latest-version.sh"
+        }
+      }
+    }
+
+    stage('Release Latest Helm Chart') {
+      when {
+        branch 'master'
+      }
+      steps {
+        container('gradle') {
+          dir('./charts/spring-testing') {
+            // Release a latest version
+            // This is to make other services easier to use this as their dependencies
+            sh "jx step changelog --version v\$(cat ../../VERSION)"
+            sh "jx step helm release"
+
+            // Reset the version
+            sh "echo '0.0.1-SNAPSHOT' > ../../VERSION"
+          }
+        }
+      }
+    }
+
     stage('Build Release') {
       when {
         branch 'master'
@@ -54,12 +87,8 @@ pipeline {
           sh "git config --global credential.helper store"
           sh "jx step git credentials"
 
-          // Build the latest version for the service
-          // This is useful to other services can use this as a dependency
-          sh "echo \$(jx-release-version) > VERSION"
-          sh "sh build-latest-version.sh"
-
           // so we can retrieve the version in later steps
+          sh "echo \$(jx-release-version) > VERSION"
           sh "jx step tag --version \$(cat VERSION)"
           sh "gradle clean build"
           sh "export VERSION=`cat VERSION` && skaffold build -f skaffold.yaml"
@@ -74,16 +103,9 @@ pipeline {
       steps {
         container('gradle') {
           dir('./charts/spring-testing') {
-            // Release a latest version
-            // This is to make other services easier to use this as their dependencies
-            sh "export LATEST_VERSION=`cat ../../VERSION`"
-            sh "echo 'latest' > ../../VERSION"
             sh "jx step changelog --version v\$(cat ../../VERSION)"
-            sh "jx step helm release"
 
             // release the helm chart
-            sh "echo \$LATEST_VERSION > ../../VERSION"
-            sh "jx step changelog --version v\$(cat ../../VERSION)"
             sh "jx step helm release"
 
             // promote through all 'Auto' promotion Environments
