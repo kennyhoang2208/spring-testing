@@ -3,9 +3,11 @@ set -e
 
 echo 'latest' > VERSION
 if [ ! $(git tag -l vlatest) ]; then
+    echo 'Not found. Creating new latest tag.'
     jx step tag --version $(cat VERSION)
 else
-    git tag -f $(cat VERSION)
+    echo 'Tag latest existed'
+    git tag -f "v$(cat VERSION)"
 fi
 
 gradle clean build
