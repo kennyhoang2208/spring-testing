@@ -18,4 +18,4 @@ fi
 # Build and push the latest image
 gradle clean build
 export VERSION=`cat VERSION` && skaffold build -f skaffold.yaml
-jx step post build --image $DOCKER_REGISTRY/$ORG/$APP_NAME:\$(cat VERSION)
+jx step post build --image "$DOCKER_REGISTRY/$ORG/$APP_NAME:$(cat VERSION)"
