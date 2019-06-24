@@ -55,10 +55,10 @@ pipeline {
           sh "jx step git credentials"
 
           sh "echo 'latest' > VERSION"
-          sh "if [ ! $(git tag -l \$(cat VERSION)) ]; then \
-                jx step tag --version \$(cat VERSION)
-              else
-                git tag -f \$(cat VERSION)
+          sh "if [ ! $(git tag -l vlatest) ]; then \
+                jx step tag --version \$(cat VERSION)\
+              else \
+                git tag -f \$(cat VERSION) \
               fi"
 
           sh "gradle clean build"
