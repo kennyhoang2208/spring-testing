@@ -1,7 +1,7 @@
 #! bin/bash
 set -e
 
-export LAST_VERSION=`cat VERSION`
+export LATEST_VERSION=`cat VERSION`
 
 echo 'latest' > VERSION
 
@@ -23,4 +23,4 @@ export VERSION=`cat VERSION` && skaffold build -f skaffold.yaml
 jx step post build --image "$DOCKER_REGISTRY/$ORG/$APP_NAME:$(cat VERSION)"
 
 # Set the version back to the last one
-echo $LAST_VERSION > VERSION
+echo $LATEST_VERSION > VERSION

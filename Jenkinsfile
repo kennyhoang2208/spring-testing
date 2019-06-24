@@ -56,10 +56,10 @@ pipeline {
 
           // Build the latest version for the service
           // This is useful to other services can use this as a dependency
+          sh "echo \$(jx-release-version) > VERSION"
           sh "sh build-latest-version.sh"
 
           // so we can retrieve the version in later steps
-          sh "echo \$(jx-release-version) > VERSION"
           sh "jx step tag --version \$(cat VERSION)"
           sh "gradle clean build"
           sh "export VERSION=`cat VERSION` && skaffold build -f skaffold.yaml"
