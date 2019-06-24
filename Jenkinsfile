@@ -54,10 +54,15 @@ pipeline {
           sh "git config --global credential.helper store"
           sh "jx step git credentials"
 
+          sh "echo 'latest' > VERSION"
+          sh "jx step tag --version \$(cat VERSION)"
+          sh "gradle clean build"
+          sh "export VERSION=`cat VERSION` && skaffold build -f skaffold.yaml"
+          sh "jx step post build --image $DOCKER_REGISTRY/$ORG/$APP_NAME:\$(cat VERSION)"
+
           // so we can retrieve the version in later steps
           sh "echo \$(jx-release-version) > VERSION"
           sh "jx step tag --version \$(cat VERSION)"
-          sh "gradle clean build"
           sh "export VERSION=`cat VERSION` && skaffold build -f skaffold.yaml"
           sh "jx step post build --image $DOCKER_REGISTRY/$ORG/$APP_NAME:\$(cat VERSION)"
         }
@@ -70,9 +75,13 @@ pipeline {
       steps {
         container('gradle') {
           dir('./charts/spring-testing') {
-            sh "jx step changelog --version v\$(cat ../../VERSION)"
+            // Release a latest version
+            // This is to make other services easier to use this as their dependencies
+            sh "jx step changelog --version vlatest"
+            sh "jx step helm release"
 
             // release the helm chart
+            sh "jx step changelog --version v\$(cat ../../VERSION)"
             sh "jx step helm release"
 
             // promote through all 'Auto' promotion Environments
