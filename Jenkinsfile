@@ -54,20 +54,14 @@ pipeline {
           sh "git config --global credential.helper store"
           sh "jx step git credentials"
 
-          sh "echo 'latest' > VERSION"
-          sh "if [ ! $(git tag -l vlatest) ]; then \
-                jx step tag --version \$(cat VERSION)\
-              else \
-                git tag -f \$(cat VERSION) \
-              fi"
-
-          sh "gradle clean build"
-          sh "export VERSION=`cat VERSION` && skaffold build -f skaffold.yaml"
-          sh "jx step post build --image $DOCKER_REGISTRY/$ORG/$APP_NAME:\$(cat VERSION)"
+          // Build the latest version for the service
+          // This is useful to other services can use this as a dependency
+          sh "sh build-latest-version.sh"
 
           // so we can retrieve the version in later steps
           sh "echo \$(jx-release-version) > VERSION"
           sh "jx step tag --version \$(cat VERSION)"
+          sh "gradle clean build"
           sh "export VERSION=`cat VERSION` && skaffold build -f skaffold.yaml"
           sh "jx step post build --image $DOCKER_REGISTRY/$ORG/$APP_NAME:\$(cat VERSION)"
         }
