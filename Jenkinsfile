@@ -65,7 +65,7 @@ pipeline {
           dir('./charts/spring-testing') {
             // Release a latest version
             // This is to make other services easier to use this as their dependencies
-            sh "echo '0.0.1-preview' > VERSION"
+            sh "echo '0.1.0-preview' > VERSION"
             sh "jx step changelog --version v\$(cat ../../VERSION)"
 
             // release the helm chart
