@@ -42,21 +42,21 @@ pipeline {
       }
     }
 
-    stage('Build Latest Image') {
+    stage('Build Preview Image') {
       when {
         branch 'master'
       }
       steps {
         container('gradle') {
 
-          // Build the latest version for the service
+          // Build the preview version for the service
           // This is useful to other services can use this as a dependency
-          sh "sh build-latest-version.sh"
+          sh "sh build-preview-version.sh"
         }
       }
     }
 
-    stage('Release Latest Helm Chart') {
+    stage('Release Preview Helm Chart') {
       when {
         branch 'master'
       }
@@ -65,7 +65,7 @@ pipeline {
           dir('./charts/spring-testing') {
             // Release a latest version
             // This is to make other services easier to use this as their dependencies
-            sh "jx step changelog --version vlatest"
+            sh "jx step changelog --version v0.0.1-preview"
             sh "jx step helm release"
           }
         }
