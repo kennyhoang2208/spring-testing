@@ -18,7 +18,7 @@ if [ ! $(git tag -l v0.1.0-preview) ]; then
     # jx step tag will format `0.1.0-preview` to `v0.1.0-preview`
     jx step tag --version $(cat VERSION)
 else
-    echo 'Tag 0.1.0-preview existed'
+    echo 'The tag 0.1.0-preview existed'
     git tag -f "v0.1.0-preview"
 fi
 
