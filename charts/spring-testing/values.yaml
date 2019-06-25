@@ -4,7 +4,7 @@
 replicaCount: 2
 image:
   repository: 10.31.250.13:5000/kennyhoang2208/spring-testing
-  tag: 0.1.0-preview
+  tag: 0.1.1
   pullPolicy: Always
 
 # define environment variables here as a map of key: value
