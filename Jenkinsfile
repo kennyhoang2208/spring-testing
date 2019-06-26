@@ -89,7 +89,7 @@ pipeline {
             sh "jx step helm delete $APP_NAME-0.1.0-SNAPSHOT"
 
             // release the helm chart
-            sh "jx step helm release -f"
+            sh "jx step helm release"
           }
         }
       }
