@@ -77,9 +77,9 @@ pipeline {
       when {
         branch 'master'
       }
-      environment {
-        TILLER_NAMESPACE = "kube-system"
-      }
+      // environment {
+      //   TILLER_NAMESPACE = "kube-system"
+      // }
       steps {
         container('gradle') {
           dir('./charts/spring-testing') {
@@ -89,8 +89,8 @@ pipeline {
             sh "jx step changelog --version v0.1.0-SNAPSHOT"
 
             // Delete the snapshot chart before releasing a new one
-            sh "jx step helm delete $APP_NAME-0.1.0-SNAPSHOT"
-            sh "curl -X 'DELETE' http://jenkins-x-chartmuseum:8080/api/charts/$APP_NAME/0.1.0-SNAPSHOT"
+            sh "jx step helm delete --purge $APP_NAME-0.1.0-SNAPSHOT"
+            // sh "curl -X 'DELETE' http://jenkins-x-chartmuseum:8080/api/charts/$APP_NAME/0.1.0-SNAPSHOT"
 
             // release the helm chart
             sh "jx step helm release"
