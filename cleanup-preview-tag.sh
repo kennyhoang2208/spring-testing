@@ -1,4 +1,4 @@
-#! bin/bash
+#!/bin/bash
 set -e
 
 # Check if the tag 0.1.0-SNAPSHOT existed
