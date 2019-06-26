@@ -60,7 +60,7 @@ pipeline {
           sh "echo '0.1.0-SNAPSHOT' > VERSION"
 
           // Check if the latest existed. Delete it before creating a new one
-          sh "if [ $(git tag -l v0.1.0-SNAPSHOT) ]; then
+          sh "if [ \$(git tag -l v0.1.0-SNAPSHOT) ]; then
   echo 'The tag 0.1.0-SNAPSHOT existed'
   # Delete the tag
   git tag -d 'v0.1.0-SNAPSHOT'
