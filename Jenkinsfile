@@ -56,7 +56,7 @@ pipeline {
 
           // Check if the latest existed. Delete it before creating a new one
           // Fetch new tags for checking tag existed
-          sh "git fetch --tags"
+          sh "git fetch --tags --all --prune -f"
           sh "echo '0.1.0-SNAPSHOT' > VERSION"
           // sh "echo \$(jx-release-version -same-release) > VERSION"
           sh "sh cleanup-preview-tag.sh"
@@ -87,6 +87,7 @@ pipeline {
 
             // Delete the snapshot chart before releasing a new one
             sh "jx step helm delete $APP_NAME-0.1.0-SNAPSHOT"
+            sh "curl -X 'DELETE' http://jenkins-x-chartmuseum:8080/api/charts/$APP_NAME/0.1.0-SNAPSHOT"
 
             // release the helm chart
             sh "jx step helm release"
