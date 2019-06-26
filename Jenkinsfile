@@ -65,8 +65,11 @@ pipeline {
           dir('./charts/spring-testing') {
             // Release a latest version
             // This is to make other services easier to use this as their dependencies
-            sh "echo '0.1.0-preview' > VERSION"
-            sh "jx step changelog --version v\$(cat ../../VERSION)"
+            sh "echo '0.1.0-SNAPSHOT' > VERSION"
+            sh "jx step changelog --version v0.1.0-SNAPSHOT"
+
+            // Delete the snapshot chart before releasing a new one
+            sh "jx step helm delete $APP_NAME-0.1.0-SNAPSHOT"
 
             // release the helm chart
             sh "jx step helm release"

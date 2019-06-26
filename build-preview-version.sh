@@ -9,17 +9,17 @@ jx step git credentials
 # Fetch new tags
 git fetch --tags
 
-echo '0.1.0-preview' > VERSION
+echo '0.1.0-SNAPSHOT' > VERSION
 
 # Check if the latest existed
-if [ ! $(git tag -l v0.1.0-preview) ]; then
-    echo 'Not found. Creating new 0.1.0-preview tag.'
+if [ ! $(git tag -l v0.1.0-SNAPSHOT) ]; then
+    echo 'Not found. Creating new 0.1.0-SNAPSHOT tag.'
 
-    # jx step tag will format `0.1.0-preview` to `v0.1.0-preview`
+    # jx step tag will format `0.1.0-SNAPSHOT` to `v0.1.0-SNAPSHOT`
     jx step tag --version $(cat VERSION)
 else
-    echo 'The tag 0.1.0-preview existed'
-    git tag -f "v0.1.0-preview"
+    echo 'The tag 0.1.0-SNAPSHOT existed'
+    git tag -f "v0.1.0-SNAPSHOT"
 fi
 
 # Build and push the latest image
