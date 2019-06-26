@@ -57,8 +57,8 @@ pipeline {
           // Check if the latest existed. Delete it before creating a new one
           // Fetch new tags for checking tag existed
           sh "git fetch --tags"
-          // sh "echo '0.1.0-SNAPSHOT' > VERSION"
-          sh "echo \$(jx-release-version -same-release) > VERSION"
+          sh "echo '0.1.0-SNAPSHOT' > VERSION"
+          // sh "echo \$(jx-release-version -same-release) > VERSION"
           sh "sh cleanup-preview-tag.sh"
 
           // jx step tag will format `0.1.0-SNAPSHOT` to `v0.1.0-SNAPSHOT`
