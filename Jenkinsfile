@@ -58,7 +58,7 @@ pipeline {
           // Fetch new tags for checking tag existed
           sh "git fetch --tags"
           sh "echo '0.1.0-SNAPSHOT' > VERSION"
-          sh "cleanup-preview-tag.sh"
+          sh "sh cleanup-preview-tag.sh"
 
           // jx step tag will format `0.1.0-SNAPSHOT` to `v0.1.0-SNAPSHOT`
           sh "jx step tag --version \$(cat VERSION)"
