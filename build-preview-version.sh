@@ -22,6 +22,7 @@ else
     # git tag -f "v0.1.0-SNAPSHOT"
     # Delete the tag
     git tag -d "v0.1.0-SNAPSHOT"
+    git push --delete origin "v0.1.0-SNAPSHOT"
 fi
 
 # jx step tag will format `0.1.0-SNAPSHOT` to `v0.1.0-SNAPSHOT`
