@@ -54,18 +54,11 @@ pipeline {
           sh "git config --global credential.helper store"
           sh "jx step git credentials"
 
-          // Fetch new tags
-          sh "git fetch --tags"
-
-          sh "echo '0.1.0-SNAPSHOT' > VERSION"
-
           // Check if the latest existed. Delete it before creating a new one
-          sh "if [ \$(git tag -l v0.1.0-SNAPSHOT) ]; then
-  echo 'The tag 0.1.0-SNAPSHOT existed'
-  # Delete the tag
-  git tag -d 'v0.1.0-SNAPSHOT'
-  git push --delete origin 'v0.1.0-SNAPSHOT'
-fi"
+          // Fetch new tags for checking tag existed
+          sh "git fetch --tags"
+          sh "echo '0.1.0-SNAPSHOT' > VERSION"
+          sh "cleanup-preview-tag.sh"
 
           // jx step tag will format `0.1.0-SNAPSHOT` to `v0.1.0-SNAPSHOT`
           sh "jx step tag --version $(cat VERSION)"
