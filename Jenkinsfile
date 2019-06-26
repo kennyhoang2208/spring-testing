@@ -77,6 +77,9 @@ pipeline {
       when {
         branch 'master'
       }
+      environment {
+        TILLER_NAMESPACE = "kube-system"
+      }
       steps {
         container('gradle') {
           dir('./charts/spring-testing') {
