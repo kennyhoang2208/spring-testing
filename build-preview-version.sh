@@ -12,14 +12,8 @@ git fetch --tags
 echo '0.1.0-SNAPSHOT' > VERSION
 
 # Check if the latest existed
-if [ ! $(git tag -l v0.1.0-SNAPSHOT) ]; then
-    echo 'Not found. Creating new 0.1.0-SNAPSHOT tag.'
-
-    # jx step tag will format `0.1.0-SNAPSHOT` to `v0.1.0-SNAPSHOT`
-    # jx step tag --version $(cat VERSION)
-else
+if [ $(git tag -l v0.1.0-SNAPSHOT) ]; then
     echo 'The tag 0.1.0-SNAPSHOT existed'
-    # git tag -f "v0.1.0-SNAPSHOT"
     # Delete the tag
     git tag -d "v0.1.0-SNAPSHOT"
     git push --delete origin "v0.1.0-SNAPSHOT"

@@ -49,9 +49,32 @@ pipeline {
       steps {
         container('gradle') {
 
-          // Build the preview version for the service
-          // This is useful to other services can use this as a dependency
-          sh "sh build-preview-version.sh"
+          // # Ensure we're not on a detached head
+          sh "git checkout master"
+          sh "git config --global credential.helper store"
+          sh "jx step git credentials"
+
+          // Fetch new tags
+          sh "git fetch --tags"
+
+          sh "echo '0.1.0-SNAPSHOT' > VERSION"
+
+          // Check if the latest existed. Delete it before creating a new one
+          sh "if [ $(git tag -l v0.1.0-SNAPSHOT) ]; then
+  echo 'The tag 0.1.0-SNAPSHOT existed'
+  # Delete the tag
+  git tag -d 'v0.1.0-SNAPSHOT'
+  git push --delete origin 'v0.1.0-SNAPSHOT'
+fi"
+
+          // jx step tag will format `0.1.0-SNAPSHOT` to `v0.1.0-SNAPSHOT`
+          sh "jx step tag --version $(cat VERSION)"
+
+          // Build and push the latest image
+          sh "gradle clean build"
+          sh "export VERSION=`cat VERSION` && skaffold build -f skaffold.yaml"
+          sh "jx step post build --image $DOCKER_REGISTRY/$ORG/$APP_NAME:\$(cat VERSION)"
+
         }
       }
     }
