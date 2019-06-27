@@ -90,7 +90,7 @@ pipeline {
 
             // Delete the snapshot chart before releasing a new one
             sh "jx step helm delete --purge $APP_NAME-0.1.0-SNAPSHOT"
-            sh "echo \$(curl -X 'DELETE' --fail -u $(CHARTMUSEUM_CREDS_USR):$(CHARTMUSEUM_CREDS_PSW) $(CHART_REPO)/api/charts/$APP_NAME/0.1.0-SNAPSHOT)"
+            sh "echo \$(curl -X 'DELETE' --fail -u \$(CHARTMUSEUM_CREDS_USR):\$(CHARTMUSEUM_CREDS_PSW) \$(CHART_REPO)/api/charts/$APP_NAME/0.1.0-SNAPSHOT)"
             // sh "echo \$(curl -X 'DELETE' http://jenkins-x-chartmuseum:8080/api/charts/$APP_NAME/0.1.0-SNAPSHOT)"
 
             // release the helm chart
