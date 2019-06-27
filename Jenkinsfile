@@ -57,11 +57,11 @@ pipeline {
           // Check if the latest existed. Delete it before creating a new one
           // Fetch new tags for checking tag existed
           sh "git fetch --tags --all --prune -f"
-          sh "echo '0.1.0-SNAPSHOT' > VERSION"
+          sh "echo '0.1.0-preview' > VERSION"
           // sh "echo \$(jx-release-version -same-release) > VERSION"
           sh "sh cleanup-preview-tag.sh"
 
-          // jx step tag will format `0.1.0-SNAPSHOT` to `v0.1.0-SNAPSHOT`
+          // jx step tag will format `0.1.0-preview` to `v0.1.0-preview`
           sh "jx step tag --version \$(cat VERSION)"
 
           // Build and push the latest image
@@ -86,12 +86,12 @@ pipeline {
           dir('./charts/spring-testing') {
             // Release a latest version
             // This is to make other services easier to use this as their dependencies
-            sh "echo '0.1.0-SNAPSHOT' > VERSION"
-            sh "jx step changelog --version v0.1.0-SNAPSHOT"
+            sh "echo '0.1.0-preview' > VERSION"
+            sh "jx step changelog --version v0.1.0-preview"
 
             // Delete the snapshot chart before releasing a new one
-            sh "jx step helm delete --purge $APP_NAME-0.1.0-SNAPSHOT"
-            sh "echo \$(curl -X 'DELETE' -u $CHARTMUSEUM_CREDS_USR:$CHARTMUSEUM_CREDS_PSW $CHART_REPO/api/charts/$APP_NAME/0.1.0-SNAPSHOT)"
+            sh "jx step helm delete --purge $APP_NAME-0.1.0-preview"
+            sh "echo \$(curl -X 'DELETE' -u $CHARTMUSEUM_CREDS_USR:$CHARTMUSEUM_CREDS_PSW $CHART_REPO/api/charts/$APP_NAME/0.1.0-preview)"
 
             // release the helm chart
             sh "jx step helm release"
