@@ -35,7 +35,7 @@ public class ExampleControllerTest {
 
     @Test
     public void shouldReturnHelloWorld() throws Exception {
-        assertThat(subject.hello(), is("Hello World!"));
+        assertThat(subject.hello(), is("Hello Jenkins X World!"));
     }
 
     @Test

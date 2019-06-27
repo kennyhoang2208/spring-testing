@@ -35,7 +35,7 @@ public class ExampleControllerAPITest {
     @Test
     public void shouldReturnHelloWorld() throws Exception {
         mockMvc.perform(get("/hello"))
-                .andExpect(content().string("Hello World!"))
+                .andExpect(content().string("Hello Jenkins X World!"))
                 .andExpect(status().is2xxSuccessful());
     }
 
