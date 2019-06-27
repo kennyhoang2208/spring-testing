@@ -35,7 +35,7 @@ public class HelloE2ERestTest {
                 .get(String.format("http://localhost:%s/hello", port))
                 .then()
                 .statusCode(is(200))
-                .body(containsString("Hello World!"));
+                .body(containsString("Hello Jenkins X World!"));
     }
 
     @Test

@@ -31,7 +31,7 @@ public class ExampleController {
 
     @GetMapping("/hello")
     public String hello() {
-        return "Hello World!";
+        return "Hello Jenkins X World!";
     }
 
     @GetMapping("/hello/{lastName}")
